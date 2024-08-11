@@ -29,9 +29,11 @@ const User = mongoose.model('User', userSchema);
 
 // Route to handle form submission
 app.post('/submit', (req, res) => {
-  console.log('Received data:', req.body);
+  console.log('Received data:', req.body); // Log the received data
+
   const { username, password } = req.body;
 
+  // Basic validation: Check if the fields are empty
   if (!username || !password) {
     return res.status(400).json({ error: 'Missing username or password' });
   }
@@ -43,8 +45,12 @@ app.post('/submit', (req, res) => {
 
   newUser.save()
     .then(() => res.json({ message: 'Data saved successfully!' }))
-    .catch(err => res.status(400).json({ error: err }));
+    .catch(err => {
+      console.error('Error saving data:', err); // Log the error for debugging
+      res.status(400).json({ error: err.message || 'An error occurred' });
+    });
 });
+
 
 
 // Route to serve the HTML file
