@@ -15,9 +15,13 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/loginData')
+mongoose.connect('mongodb://localhost:27017/loginData',{
+  connectTimeoutMS: 30000,  // Increase connection timeout to 30 seconds
+  socketTimeoutMS: 45000,   // Increase socket timeout to 45 seconds
+})
 .then(() => console.log('MongoDB Connected'))
 .catch(err => console.log(err));
+
 
 // Create a Schema
 const userSchema = new mongoose.Schema({
