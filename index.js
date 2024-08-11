@@ -29,7 +29,12 @@ const User = mongoose.model('User', userSchema);
 
 // Route to handle form submission
 app.post('/submit', (req, res) => {
+  console.log('Received data:', req.body);
   const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Missing username or password' });
+  }
 
   const newUser = new User({
     username,
@@ -37,9 +42,10 @@ app.post('/submit', (req, res) => {
   });
 
   newUser.save()
-    .then(() => res.json({ message: 'something went wrong please try again later' }))
+    .then(() => res.json({ message: 'Data saved successfully!' }))
     .catch(err => res.status(400).json({ error: err }));
 });
+
 
 // Route to serve the HTML file
 app.get('/', (req, res) => {
