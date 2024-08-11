@@ -15,13 +15,12 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/loginData',{
+mongoose.connect('mongodb://localhost:27017/loginData', {
   connectTimeoutMS: 60000, // Increase connection timeout to 60 seconds
   socketTimeoutMS: 60000,  // Increase socket timeout to 60 seconds
 })
 .then(() => console.log('MongoDB Connected'))
 .catch(err => console.log(err));
-
 
 // Create a Schema
 const userSchema = new mongoose.Schema({
@@ -48,18 +47,24 @@ app.post('/submit', (req, res) => {
   });
 
   newUser.save()
-    .then(() => res.json({ message: 'Data saved successfully!' }))
+    .then(() => {
+      // Redirect to another HTML page
+      res.redirect('/success');
+    })
     .catch(err => {
       console.error('Error saving data:', err); // Log the error for debugging
       res.status(400).json({ error: err.message || 'An error occurred' });
     });
 });
 
-
-
 // Route to serve the HTML file
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Route to serve the success page
+app.get('/success', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'success.html'));
 });
 
 // Start the server
