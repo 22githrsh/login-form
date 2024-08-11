@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+require('dotenv').config();
 
 const app = express();
 
@@ -15,12 +16,13 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/loginData', {
-  connectTimeoutMS: 60000, // Increase connection timeout to 60 seconds
-  socketTimeoutMS: 60000,  // Increase socket timeout to 60 seconds
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/loginData'; // Default for local development
+mongoose.connect(mongoURI, {
+  connectTimeoutMS: 60000,
+  socketTimeoutMS: 60000,
 })
 .then(() => console.log('MongoDB Connected'))
-.catch(err => console.log(err));
+.catch(err => console.log('MongoDB connection error:', err));
 
 // Create a Schema
 const userSchema = new mongoose.Schema({
@@ -32,11 +34,10 @@ const User = mongoose.model('User', userSchema);
 
 // Route to handle form submission
 app.post('/submit', (req, res) => {
-  console.log('Received data:', req.body); // Log the received data
+  console.log('Received data:', req.body);
 
   const { username, password } = req.body;
 
-  // Basic validation: Check if the fields are empty
   if (!username || !password) {
     return res.status(400).json({ error: 'Missing username or password' });
   }
@@ -47,12 +48,9 @@ app.post('/submit', (req, res) => {
   });
 
   newUser.save()
-    .then(() => {
-      // Redirect to another HTML page
-      res.redirect('/success');
-    })
+    .then(() => res.redirect('/success'))
     .catch(err => {
-      console.error('Error saving data:', err); // Log the error for debugging
+      console.error('Error saving data:', err);
       res.status(400).json({ error: err.message || 'An error occurred' });
     });
 });
