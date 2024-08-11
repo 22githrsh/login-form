@@ -16,8 +16,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/loginData',{
-  connectTimeoutMS: 30000,  // Increase connection timeout to 30 seconds
-  socketTimeoutMS: 45000,   // Increase socket timeout to 45 seconds
+  connectTimeoutMS: 60000, // Increase connection timeout to 60 seconds
+  socketTimeoutMS: 60000,  // Increase socket timeout to 60 seconds
 })
 .then(() => console.log('MongoDB Connected'))
 .catch(err => console.log(err));
